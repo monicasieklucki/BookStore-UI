@@ -8,7 +8,7 @@ flask = "*"
 gunicorn = "*"
 Pillow = "*"
 flask_sqlalchemy = "*"
-bcrypt = "*"
+flask_bcrypt = "*"
 
 [dev-packages]
 
