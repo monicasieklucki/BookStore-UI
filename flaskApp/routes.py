@@ -29,6 +29,22 @@ def home():
 
     return render_template('home.html', products=json_response)
 
+@app.route("/product_detail")
+def product_detail():
+    #api_url = "http://book-store-luc.herokuapp.com/service/productservice/product"
+    api_url = "http://localhost:8080/service/productservice/product"
+
+    headers = {'content-type': 'application/json', 'Accept': 'application/json'}
+
+    response = requests.get(api_url, headers=headers)
+    print(response)
+    print(response.text)
+
+    json_response = json.loads(response.text)
+    print(json_response)
+
+    return render_template('home.html', products=json_response)
+
 
 @app.route("/about")
 def about():
@@ -42,20 +58,29 @@ def register():
     form = RegistrationForm()
     if form.validate_on_submit():
         hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
-        #user = User(username=form.username.data, email=form.email.data, password=hashed_password)
-        #db.session.add(user)
-        #db.session.commit()
+        
+        url = "http://localhost:8080/service/userservice/user"
+        user = {'username': form.username.data, 'email': form.email.data, 'password': hashed_password}
+
+        headers = {'content-type': 'application/json', 'Accept': 'application/json'}
+
+        response = requests.post(url, data=json.dumps(user), headers=headers)
+        json_response = json.loads(response.text)
+        print(json_response)
+        username = json_response['username']
+
         flash('Your account has been created! You are now able to log in', 'success')
-        return redirect(url_for('login'))
+        return redirect(url_for('login'), username = username)
     return render_template('register.html', title='Register', form=form)
 
-
-@app.route("/login", methods=['GET', 'POST'])
-def login():
+@app.route("/login/<username>", defaults={'username': None, 'links': None}, methods=['GET', 'POST'])
+def login(username):
+    print(username)
     if current_user.is_authenticated:
         return redirect(url_for('home'))
     form = LoginForm()
-    #if form.validate_on_submit():
+    if form.validate_on_submit():
+        print("form validated")
         #user = User.query.filter_by(email=form.email.data).first()
         #if user and bcrypt.check_password_hash(user.password, form.password.data):
         #    login_user(user, remember=form.remember.data)
