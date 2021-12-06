@@ -1,5 +1,7 @@
 import os
 import secrets
+import requests
+import json
 from PIL import Image
 from flask import render_template, url_for, flash, redirect, request, abort
 from flaskApp import app, db, bcrypt
@@ -11,8 +13,21 @@ from flask_login import login_user, current_user, logout_user, login_required
 @app.route("/")
 @app.route("/home")
 def home():
+    #api_url = "http://book-store-luc.herokuapp.com/service/productservice/product"
+    api_url = "http://localhost:8080/service/productservice/product"
 
-    return render_template('home.html')
+    headers = {'content-type': 'application/json', 'Accept': 'application/json'}
+
+    response = requests.get(api_url, headers=headers)
+    print(response)
+    print(response.text)
+
+    json_response = json.loads(response.text)
+    print(json_response)
+
+
+
+    return render_template('home.html', products=json_response)
 
 
 @app.route("/about")
