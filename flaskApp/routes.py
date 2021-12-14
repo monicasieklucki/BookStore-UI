@@ -237,14 +237,14 @@ def customer():
         flash('Your account has been updated!', 'success')
         return redirect(url_for('customer'))
     elif request.method == 'GET':
-
+        print("does nothing yet")
         #form.username.data = current_user.username
         #form.email.data = current_user.email
     return render_template('customer.html', title='Customer', form=form)
 
 @app.route("/delete_customer", methods=['GET', 'POST'])
 @login_required
-def delete_customer();
+def delete_customer():
 
     links = session['customer']['links']
 
