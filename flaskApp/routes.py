@@ -25,7 +25,7 @@ hostname = "http://localhost:8080/"
 def home():
 
     #entry point
-    api_url = "http://localhost:8080/service/productservice/product"
+    api_url = "http://book-store-luc.herokuapp.com/service/productservice/product"
 
     headers = {'content-type': 'application/json', 'Accept': 'application/json'}
 
@@ -65,7 +65,7 @@ def product(Links):
 @app.route("/product_detail")
 def product_detail():
     #api_url = "http://book-store-luc.herokuapp.com/service/productservice/product"
-    api_url = "http://localhost:8080/service/productservice/product"
+    api_url = "http://book-store-luc.herokuapp.com/service/productservice/product"
 
     headers = {'content-type': 'application/json', 'Accept': 'application/json'}
 
@@ -96,7 +96,7 @@ def register():
         hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
         
         #entry point
-        url = "http://localhost:8080/service/userservice/user"
+        url = "http://book-store-luc.herokuapp.com/service/userservice/user"
         user = {'username': form.username.data, 'email': form.email.data, 'password': hashed_password}
 
         headers = {'content-type': 'application/json', 'Accept': 'application/json'}
@@ -157,7 +157,7 @@ def login():
                     else:
                         flash('Login Unsuccessful. Please check email and password', 'danger')
         else: #not working I need to pass in username to retrieve correct response
-            url = "http://localhost:8080/service/userservice/user/monica" #+form.email.data
+            url = "http://book-store-luc.herokuapp.com/service/userservice/user/monica" #+form.email.data
             headers = {'content-type': 'application/json', 'Accept': 'application/json'}
             response = requests.get(url, headers=headers)
 
