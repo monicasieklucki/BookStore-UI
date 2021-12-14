@@ -222,17 +222,39 @@ def customer():
     form = CustomerForm()
     if form.validate_on_submit():
 
+        links = session['customer']['links']
+        for link in links:
+            if link["rel"] == "UpdateCustomer":
+                headers = {'content-type': 'application/'+link["mediatype"], 'Accept': 'application/'+link["mediatype"]}
+
+                customer = {'firstname': form.firstname.data, 'lastname': form.lastname.data}
+
+                response = requests.post(link["url"], data=json.dumps(customer), headers=headers)
+
         #current_user.username = form.username.data
         #current_user.email = form.email.data
-        #db.session.commit()
+
         flash('Your account has been updated!', 'success')
         return redirect(url_for('customer'))
     elif request.method == 'GET':
-        print("hello")
+
         #form.username.data = current_user.username
         #form.email.data = current_user.email
     return render_template('customer.html', title='Customer', form=form)
 
+@app.route("/delete_customer", methods=['GET', 'POST'])
+@login_required
+def delete_customer();
+
+    links = session['customer']['links']
+
+    for link in links:
+        if link['rel'] == "DeleteCustomer":
+            url = link['url'] #+form.email.data
+            headers = {'content-type': 'application/'+link["mediatype"], 'Accept': 'application/'+link["mediatype"]}
+            response = requests.get(url, headers=headers)
+
+    logout()
 """
 @app.route("/post/new", methods=['GET', 'POST'])
 @login_required

@@ -5,7 +5,6 @@ from wtforms import StringField, PasswordField, SubmitField, BooleanField, TextA
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
 from flaskApp.models import User
 
-
 class RegistrationForm(FlaskForm):
     username = StringField('Username',
                            validators=[DataRequired(), Length(min=2, max=20)])
@@ -20,7 +19,7 @@ class CustomerForm(FlaskForm):
     customerid = IntegerField('Customer Id')
     lastname = StringField('First Name',validators=[DataRequired()])
     firstname = StringField('Last Name',validators=[DataRequired()])
-    baddress = IntegerField('Billing Address Id')
+    """baddress = IntegerField('Billing Address Id')
     saddress = IntegerField('Shipping Address Id')
     email = StringField('Email',validators=[DataRequired(), Email()])
 
@@ -29,7 +28,7 @@ class CustomerForm(FlaskForm):
     unit= StringField('Unit')
     city = StringField("City",validators=[DataRequired()])
     state =StringField('State',validators=[DataRequired()])
-    zipcode = StringField('ZipCode',validators=[DataRequired()])
+    zipcode = StringField('ZipCode',validators=[DataRequired()])"""
 
     submit = SubmitField('Update')
 
