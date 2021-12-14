@@ -3,7 +3,7 @@
     {% for product in products %}
         <article class="media content-section">
           <div class="media-body">
-            <h2><a class="article-title" >{{ product.title }}</a></h2>
+            <h2><a href="{{ url_for('product', Links=product.links|join(',')) }}" class="article-title" >{{ product.title }}</a></h2>
             <p class="article-content" style="float: left;">${{ product.price }}</p>
           </div>
         </article>
